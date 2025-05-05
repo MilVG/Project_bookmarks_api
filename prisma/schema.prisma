@@ -9,40 +9,40 @@ datasource db {
 }
 
 model bookmark_tags {
-  idbookmarkTg BigInt    @id
-  bookmark_id  BigInt
-  tag_id       BigInt
+  idbookmarkTg String    @id @default(uuid())
+  bookmark_id  String
+  tag_id       String
   bookmarks    bookmarks @relation(fields: [bookmark_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_tags_bookmark_id_foreign")
   tags         tags      @relation(fields: [tag_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmark_tags_tag_id_foreign")
 }
 
 model bookmarks {
-  id            BigInt          @id
-  id_categories BigInt
+  id            String          @id @default(uuid())
+  id_categories String
   title         String
   url           String
   description   String
   created_at    DateTime        @db.Timestamp(0)
-  idusers       BigInt
+  idusers       String
   bookmark_tags bookmark_tags[]
   categories    categories      @relation(fields: [id_categories], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmarks_id_categories_foreign")
   users         users           @relation(fields: [idusers], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "bookmarks_id_users_foreingn")
 }
 
 model categories {
-  id        BigInt      @id
+  id        String      @id @default(uuid())
   name      String
   bookmarks bookmarks[]
 }
 
 model tags {
-  id            BigInt          @id
+  id            String          @id @default(uuid())
   name          BigInt
   bookmark_tags bookmark_tags[]
 }
 
 model users {
-  id         BigInt      @id
+  id         String      @id @default(uuid())
   email      String
   password   String
   created_at DateTime    @db.Timestamp(6)
