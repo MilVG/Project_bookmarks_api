@@ -4,9 +4,9 @@ import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class CategoriesService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) { }
   async create(createCategoryDto: CreateCategoryDto) {
-    return this.prisma.categories.create({
+    return this.prisma.client.categories.create({
       data: {
         name: createCategoryDto.name,
       },
@@ -15,6 +15,6 @@ export class CategoriesService {
 
   // opcional: método para listar todas
   async findAll() {
-    return this.prisma.categories.findMany();
+    return this.prisma.client.categories.findMany();
   }
 }
