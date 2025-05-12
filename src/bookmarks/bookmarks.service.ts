@@ -4,10 +4,10 @@ import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 
 @Injectable()
 export class BookmarksService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) { }
 
   async getAllBookmarks() {
-    return this.prisma.bookmarks.findMany({
+    return this.prisma.client.bookmarks.findMany({
       include: {
         categories: true,
         users: true,
@@ -22,13 +22,13 @@ export class BookmarksService {
   async createBookmark(dto: CreateBookmarkDto) {
     // 1. Buscar o crear la categoría (usando findUnique + create)
 
-    let category = await this.prisma.categories.findFirst({
+    let category = await this.prisma.client.categories.findFirst({
       where: { name: dto.categoryName },
     });
 
 
     if (!category) {
-      category = await this.prisma.categories.create({
+      category = await this.prisma.client.categories.create({
         data: { name: dto.categoryName },
       });
     }
@@ -37,7 +37,7 @@ export class BookmarksService {
     const DEFAULT_USER_ID = 'b82ee126-489d-44a4-972a-5243c549d7fa'; // reemplaza esto por uno real
 
     // Crear el bookmark
-    return this.prisma.bookmarks.create({
+    return this.prisma.client.bookmarks.create({
       data: {
         title: dto.title,
         url: dto.url,
