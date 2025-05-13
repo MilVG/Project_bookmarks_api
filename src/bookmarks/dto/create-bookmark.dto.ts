@@ -1,5 +1,5 @@
 
-import { IsString, IsUrl, IsUUID } from 'class-validator';
+import { IsString, IsUrl } from 'class-validator';
 
 export class CreateBookmarkDto {
   @IsString()
@@ -10,9 +10,6 @@ export class CreateBookmarkDto {
 
   @IsString()
   description: string;
-
-  @IsUUID()
-  idusers: string;
 
   @IsString()
   categoryName: string;
